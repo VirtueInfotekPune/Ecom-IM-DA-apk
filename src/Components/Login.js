@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "./Login.css";
 
 const LoginForm = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [userType, setUserType] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [companyName, setCompanyName] = useState('');
+  // const [name, setName] = useState('');
+  // const [companyName, setCompanyName] = useState('');
 
   const handleLogin = async () => {
     try {
@@ -19,11 +19,16 @@ const LoginForm = () => {
       switch (userType) {
         case 'inventoryManager':
           apiUrl = 'https://adminpr.onrender.com/api/invman/';
-          navigateUrl = 'https://inv-manags.onrender.com/';
+          // navigateUrl = 'https://inv-manags.onrender.com/';
+          // added new url for IM
+          navigateUrl = 'https://ecom-inventory-manager.onrender.com/';
+          
           break;
-        case 'deliveryAgent':
-          apiUrl = 'https://adminpr.onrender.com/api/delivpar/';
-          navigateUrl = 'https://deliv-partn.onrender.com';
+          case 'deliveryAgent':
+            apiUrl = 'https://adminpr.onrender.com/api/delivpar/';
+            // navigateUrl = 'https://deliv-partn.onrender.com';
+            // added new url for DA
+          navigateUrl = 'https://cus-delivery-agent.onrender.com/';
           break;
         default:
           return;
