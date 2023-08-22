@@ -1,43 +1,40 @@
 import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import "./Login.css";
+import './Login.css';
 
 const LoginForm = () => {
-  // const navigate = useNavigate();
   const [userType, setUserType] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const [name, setName] = useState('');
-  // const [companyName, setCompanyName] = useState('');
 
   const handleLogin = async () => {
     try {
       let apiUrl = '';
       let navigateUrl = '';
-  
+
       switch (userType) {
         case 'inventoryManager':
           apiUrl = 'https://adminpr.onrender.com/api/invman/';
+          // old navigate url 
           // navigateUrl = 'https://inv-manags.onrender.com/';
-          // added new url for IM
+          // new url for IM
           navigateUrl = 'https://ecom-inventory-manager.onrender.com/';
-          
           break;
-          case 'deliveryAgent':
-            apiUrl = 'https://adminpr.onrender.com/api/delivpar/';
-            // navigateUrl = 'https://deliv-partn.onrender.com';
-            // added new url for DA
+        case 'deliveryAgent':
+          apiUrl = 'https://adminpr.onrender.com/api/delivpar/';
+           // old navigate url 
+          // navigateUrl = 'https://deliv-partn.onrender.com';
+          // new url for DA
           navigateUrl = 'https://cus-delivery-agent.onrender.com/';
           break;
         default:
           return;
       }
-  
+
       const response = await axios.get(apiUrl);
       const userData = response.data;
-      const foundUser = userData[0]; // Get the first user object
-  
+      const foundUser = userData[0];
+
       if (foundUser.email === email && password === 'test1234') {
         // Navigate to the appropriate URL
         window.location.href = navigateUrl;
@@ -50,13 +47,12 @@ const LoginForm = () => {
       console.error(error);
     }
   };
-  
 
   return (
-    <div className="login-form">
+    <div className="container">
       <div className='head'><h2>LOGIN</h2></div>
       <label className='option'>
-        User Type:
+        User Type : {userType}
         <select value={userType} onChange={(e) => setUserType(e.target.value)}>
           <option value="">Select User Type</option>
           <option value="inventoryManager">Inventory Manager</option>
@@ -64,28 +60,15 @@ const LoginForm = () => {
         </select>
       </label>
 
-      {userType === 'inventoryManager' && (
+      {(userType === 'inventoryManager' || userType === 'deliveryAgent') && (
         <div className='credentials'>
           <label>
             Email:
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input className='input-handle' type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
           </label>
           <label>
             Password:
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </label>
-        </div>
-      )}
-
-      {userType === 'deliveryAgent' && (
-        <div className='credentials'>
-          <label>
-            Email:
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          </label>
-          <label>
-            Password:
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input className='input-handle' type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </label>
         </div>
       )}
